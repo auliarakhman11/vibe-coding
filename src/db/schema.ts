@@ -11,4 +11,13 @@ export const users = mysqlTable('users', {
   updated_at: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
 });
 
+export const session = mysqlTable('session', {
+  id: int('id').primaryKey().autoincrement(),
+  token: varchar('token', { length: 255 }).notNull(),
+  user_id: int('user_id').notNull().references(() => users.id),
+  created_at: timestamp('created_at').defaultNow().notNull(),
+  updated_at: timestamp('updated_at').defaultNow().onUpdateNow().notNull(),
+});
+
+
 

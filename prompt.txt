@@ -2,43 +2,32 @@ buatkan issue.md, untuk membuat planing. Nanti dokumen planingnya akan digunakan
 
 isi dari planing nya adalah sebagai berikut:
 
-buatkan table users dengan kolom:
+buatkan table session dengan kolom:
 - id integer autoincrement primary key
-- name varchar(255) not null
-- username varchar(255) not null unique
-- password varchar(255) not null (password merupakan hash dari bcrypt)
-- email varchar(255) not null unique
+- token varchar(255) not null (isinya UUID untuk token yang login)
+- user_id integer not null (FK ke table users)
 - created_at timestamp default current_timestamp
 - updated_at timestamp default current_timestamp on update current_timestamp
 
-buatkan api untuk regestrasi user baru
-endpoint : POST /api/users
+buatkan api untuk regestrasi user login user
+endpoint : POST /api/login
 request body : {
-    "name": "Rakhman",
     "username": "rakhman",
-    "password": "12345678",
-    "email": "auliarakhman1107@gmail.com"
+    "password": "12345678"
 }
 untuk password harus di hash menggunakan bcrypt
 
 response body (success): 
 {
-    "status": 201,
-    "message": "User created successfully",
-    "data": {
-        "id": 1,
-        "name": "Rakhman",
-        "username": "rakhman",
-        "email": "auliarakhman1107@gmail.com",
-        "created_at": "2022-01-01T00:00:00.000Z",
-        "updated_at": "2022-01-01T00:00:00.000Z"
-    }
+    "status": 200,
+    "message": "User login successfully",
+    "data": "token"
 }
 
 response body (error):
 {
-    "status": 400,
-    "message": "User already exists",
+    "status": 401,
+    "message": "User not found",
     "data": null
 }
 
