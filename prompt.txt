@@ -1,14 +1,53 @@
-buatkan issue.md, berisi planing untuk membuat ini:
+buatkan issue.md, untuk membuat planing. Nanti dokumen planingnya akan digunakan programmer atau model yang lebih murah
 
-Buat project baru di folder ini
+isi dari planing nya adalah sebagai berikut:
 
-Menggunakan Bun
+buatkan table users dengan kolom:
+- id integer autoincrement primary key
+- name varchar(255) not null
+- username varchar(255) not null unique
+- password varchar(255) not null (password merupakan hash dari bcrypt)
+- email varchar(255) not null unique
+- created_at timestamp default current_timestamp
+- updated_at timestamp default current_timestamp on update current_timestamp
 
-dan gunakan dependency:
-- ElysiaJS
-- Drizzle
-- MySQL
+buatkan api untuk regestrasi user baru
+endpoint : POST /api/users
+request body : {
+    "name": "Rakhman",
+    "username": "rakhman",
+    "password": "12345678",
+    "email": "auliarakhman1107@gmail.com"
+}
+untuk password harus di hash menggunakan bcrypt
 
-Jangan terlalu low level atau detail
-Cukup instruksikan secara high level
-Nanti dokumen planingnya akan digunakan programmer atau model yang lebih murah
+response body (success): 
+{
+    "status": 201,
+    "message": "User created successfully",
+    "data": {
+        "id": 1,
+        "name": "Rakhman",
+        "username": "rakhman",
+        "email": "auliarakhman1107@gmail.com",
+        "created_at": "2022-01-01T00:00:00.000Z",
+        "updated_at": "2022-01-01T00:00:00.000Z"
+    }
+}
+
+response body (error):
+{
+    "status": 400,
+    "message": "User already exists",
+    "data": null
+}
+
+Struktur folder didalam src
+- route : ini berisi routing ElysiaJS
+- service : berisi logic bisnis aplikasi
+
+Struktur penamaan file
+- route : nama file harus diawali dengan "route-" contoh : route-user.ts
+- service : nama file harus diawali dengan "service-" contoh : service-user.ts
+
+Jelaskan step tahapan yang harus dilakukan untuk mengimplementasikan fitur ini. anggap nanti yang mengimplementasikan adalah junior developer atau ai model yang lebih murah, jadi jelaskan sedetail mungkin.
