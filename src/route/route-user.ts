@@ -2,6 +2,16 @@ import { Elysia, t } from 'elysia';
 import { registerUserService, getCurrentUserService, logoutUserService } from '../service/service-user';
 
 export const userRoute = new Elysia({ prefix: '/api' })
+  .onError(({ code, set, error }) => {
+    if (code === 'VALIDATION') {
+      set.status = 400;
+      return {
+        status: 400,
+        message: 'Validation error',
+        data: null,
+      };
+    }
+  })
   .post('/users', async ({ body, set }) => {
     try {
       const { name, username, email, password } = body as any;
@@ -29,12 +39,15 @@ export const userRoute = new Elysia({ prefix: '/api' })
     }
   }, {
     body: t.Object({
-      name: t.String(),
-      username: t.String(),
-      email: t.String(),
-      password: t.String(),
+      name: t.String({ minLength: 1, maxLength: 255 }),
+      username: t.String({ minLength: 3, maxLength: 255 }),
+      email: t.String({ minLength: 5, maxLength: 255 }),
+      password: t.String({ minLength: 8, maxLength: 255 }),
     })
   })
+
+
+
   .derive(({ headers }) => {
     const authHeader = headers.authorization as string | undefined;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
