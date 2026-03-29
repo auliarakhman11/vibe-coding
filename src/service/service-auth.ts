@@ -4,6 +4,16 @@ import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 
+/**
+ * Mengautentikasi user dan membuat session baru.
+ * - Mencari user berdasarkan username di database.
+ * - Memvalidasi password dengan membandingkan hash menggunakan bcryptjs.
+ * - Membuat token UUID baru menggunakan crypto.randomUUID().
+ * - Menyimpan token ke tabel session dengan relasi ke user_id.
+ * @param data - Object berisi username dan password.
+ * @returns Token UUID string yang bisa digunakan sebagai Bearer token.
+ * @throws Error jika username tidak ditemukan atau password salah.
+ */
 export const loginUserService = async (data: any) => {
   const { username, password } = data;
 

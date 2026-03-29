@@ -43,7 +43,12 @@ export const userRoute = new Elysia({ prefix: '/api' })
       username: t.String({ minLength: 3, maxLength: 255 }),
       email: t.String({ minLength: 5, maxLength: 255 }),
       password: t.String({ minLength: 8, maxLength: 255 }),
-    })
+    }),
+    detail: {
+      tags: ['User'],
+      summary: 'Registrasi user baru',
+      description: 'Mendaftarkan user baru dengan data name, username, email, dan password.',
+    }
   })
 
 
@@ -76,6 +81,12 @@ export const userRoute = new Elysia({ prefix: '/api' })
         data: null,
       };
     }
+  }, {
+    detail: {
+      tags: ['User'],
+      summary: 'Get current user',
+      description: 'Mengambil data profil user yang sedang login berdasarkan Bearer token.',
+    }
   })
   .delete('/users/logout', async ({ token, set }) => {
     try {
@@ -96,5 +107,11 @@ export const userRoute = new Elysia({ prefix: '/api' })
         message: 'Logout failed',
         data: null,
       };
+    }
+  }, {
+    detail: {
+      tags: ['User'],
+      summary: 'Logout user',
+      description: 'Menghapus session user berdasarkan Bearer token (idempotent).',
     }
   });
