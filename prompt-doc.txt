@@ -1,0 +1,11 @@
+buatkan issue.md, untuk membuat planing. Nanti dokumen planingnya akan digunakan programmer atau model yang lebih murah
+
+isi dari planing nya adalah sebagai berikut:
+
+Saya ingin tambahkan fitur swagger di project ini.
+Agar user lain yang mau menggunakan API di Apliaksi ini lebih mudah dan tinggal membuka swagger nya.
+
+Buat tahapan-tahapan untuk menambahkan fitur swagger di project ini.
+Jelaskan secara detail dengan target junior programmer atau model yang lebih murah.
+
+

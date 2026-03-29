@@ -29,5 +29,10 @@ export const authRoute = new Elysia({ prefix: '/api' })
     body: t.Object({
       username: t.String(),
       password: t.String(),
-    })
+    }),
+    detail: {
+      tags: ['Auth'],
+      summary: 'Login user',
+      description: 'Mengautentikasi user menggunakan username dan password. Mengembalikan token UUID untuk digunakan sebagai Bearer token.',
+    }
   });
