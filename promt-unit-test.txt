@@ -1,0 +1,13 @@
+buatkan issue.md, untuk membuat planing. Nanti dokumen planingnya akan digunakan programmer atau model yang lebih murah
+
+isi dari planing nya adalah sebagai berikut:
+
+buatkan unit test untuk semua api yang kita buat hari ini
+
+simpan di folder test, menggunakan bun test
+
+setiap skenario, hapus datanya terlebih dahulu agar konsisten
+
+buat skenario test per API selengkap mungkin
+
+Jangan buatkan terlalu detail instruksi unit test nya. buatkan saja skenario apa saja yang harus di test, biarkan nanti yang mendetailkan adalah junior programmer atau model yang lebih murah.
