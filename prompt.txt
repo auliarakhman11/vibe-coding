@@ -2,8 +2,8 @@ buatkan issue.md, untuk membuat planing. Nanti dokumen planingnya akan digunakan
 
 isi dari planing nya adalah sebagai berikut:
 
-buatkan api untuk get user saat ini yang sedang login
-endpoint : GET /api/users/current
+buatkan api untuk logout
+endpoint : DELETE /api/users/logout
 
 headers :
 - Authorization : Bearer <token> (token ada token yang ada di table users)
@@ -11,20 +11,16 @@ headers :
 response body (success): 
 {
     "status": 200,
-    "message": "User current found",
-    "data": {
-        "id": 1,
-        "username": "rakhman",
-        "email": "auliarakhman1107@gmail.com",
-        "created_at": "2022-01-01T00:00:00.000Z",
-        "updated_at": "2022-01-01T00:00:00.000Z"
-    }
+    "message": "Logout success",
+    "data": null
 }
+
+Jika sukses logout, maka token yang ada di table users harus dihapus
 
 response body (error):
 {
     "status": 401,
-    "message": "Unauthorized",
+    "message": "Logout failed",
     "data": null
 }
 

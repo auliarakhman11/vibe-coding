@@ -78,3 +78,10 @@ export const getCurrentUserService = async (token: string) => {
 
   return user;
 };
+
+export const logoutUserService = async (token: string) => {
+  await db.delete(session).where(eq(session.token, token));
+  
+  // Hapus blok affectedRows untuk idempotency
+  return true;
+};
