@@ -8,9 +8,14 @@ const app = new Elysia()
   .use(authRoute)
   .get('/', () => {
     return { status: 'ok', message: 'ElysiaJS + Drizzle server is running!' };
-  })
-  .listen(3000);
+  });
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
-);
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(3000);
+  console.log(
+    `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+  );
+}
+
+export default app;
+
