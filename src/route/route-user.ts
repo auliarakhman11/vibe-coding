@@ -48,6 +48,25 @@ export const userRoute = new Elysia({ prefix: '/api' })
       tags: ['User'],
       summary: 'Registrasi user baru',
       description: 'Mendaftarkan user baru dengan data name, username, email, dan password.',
+    },
+    response: {
+      201: t.Object({
+        status: t.Number(),
+        message: t.String(),
+        data: t.Object({
+          id: t.Number(),
+          name: t.String(),
+          username: t.String(),
+          email: t.String(),
+          created_at: t.Any(),
+          updated_at: t.Any(),
+        }),
+      }),
+      400: t.Object({
+        status: t.Number(),
+        message: t.String(),
+        data: t.Null(),
+      }),
     }
   })
 
@@ -86,6 +105,24 @@ export const userRoute = new Elysia({ prefix: '/api' })
       tags: ['User'],
       summary: 'Get current user',
       description: 'Mengambil data profil user yang sedang login berdasarkan Bearer token.',
+    },
+    response: {
+      200: t.Object({
+        status: t.Number(),
+        message: t.String(),
+        data: t.Object({
+          id: t.Number(),
+          username: t.String(),
+          email: t.String(),
+          created_at: t.Any(),
+          updated_at: t.Any(),
+        }),
+      }),
+      401: t.Object({
+        status: t.Number(),
+        message: t.String(),
+        data: t.Null(),
+      }),
     }
   })
   .delete('/users/logout', async ({ token, set }) => {
@@ -113,5 +150,17 @@ export const userRoute = new Elysia({ prefix: '/api' })
       tags: ['User'],
       summary: 'Logout user',
       description: 'Menghapus session user berdasarkan Bearer token (idempotent).',
+    },
+    response: {
+      200: t.Object({
+        status: t.Number(),
+        message: t.String(),
+        data: t.Null(),
+      }),
+      401: t.Object({
+        status: t.Number(),
+        message: t.String(),
+        data: t.Null(),
+      }),
     }
   });
