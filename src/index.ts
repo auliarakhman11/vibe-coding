@@ -1,13 +1,12 @@
 import { Elysia } from 'elysia';
-import { openapi } from '@elysiajs/openapi';
+import { swagger } from '@elysiajs/swagger';
 import { db } from './db';
 import { userRoute } from './route/route-user';
 import { authRoute } from './route/route-auth';
 
 const app = new Elysia()
-  .use(openapi({
+  .use(swagger({
     path: '/swagger',
-    provider: 'swagger-ui',
     documentation: {
       info: {
         title: 'Vibe Coding API',
@@ -16,6 +15,7 @@ const app = new Elysia()
       },
     },
   }))
+
   .use(userRoute)
   .use(authRoute)
   .get('/', () => {
