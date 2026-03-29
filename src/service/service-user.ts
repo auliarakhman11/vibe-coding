@@ -80,11 +80,8 @@ export const getCurrentUserService = async (token: string) => {
 };
 
 export const logoutUserService = async (token: string) => {
-  const [affected]: any = await db.delete(session).where(eq(session.token, token));
+  await db.delete(session).where(eq(session.token, token));
   
-  if (affected.affectedRows === 0) {
-    throw new Error('Logout failed');
-  }
+  // Hapus blok affectedRows untuk idempotency
   return true;
 };
-

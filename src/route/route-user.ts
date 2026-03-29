@@ -35,14 +35,16 @@ export const userRoute = new Elysia({ prefix: '/api' })
       password: t.String(),
     })
   })
-  .get('/users/current', async ({ headers, set }) => {
+  .derive(({ headers }) => {
+    const authHeader = headers.authorization as string | undefined;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return { token: null as string | null };
+    }
+    const token = authHeader.split(' ')[1];
+    return { token: token || null };
+  })
+  .get('/users/current', async ({ token, set }) => {
     try {
-      const authHeader = headers.authorization;
-      if (!authHeader || typeof authHeader !== 'string' || !authHeader.startsWith('Bearer ')) {
-        throw new Error('Unauthorized');
-      }
-
-      const token = authHeader.split(' ')[1];
       if (!token) throw new Error('Unauthorized');
       
       const user = await getCurrentUserService(token);
@@ -62,14 +64,8 @@ export const userRoute = new Elysia({ prefix: '/api' })
       };
     }
   })
-  .delete('/users/logout', async ({ headers, set }) => {
+  .delete('/users/logout', async ({ token, set }) => {
     try {
-      const authHeader = headers.authorization;
-      if (!authHeader || typeof authHeader !== 'string' || !authHeader.startsWith('Bearer ')) {
-        throw new Error('Logout failed');
-      }
-
-      const token = authHeader.split(' ')[1];
       if (!token) throw new Error('Logout failed');
       
       await logoutUserService(token);
