@@ -1,5 +1,5 @@
 import { db } from '../db';
-import { users } from '../db/schema';
+import { users, session } from '../db/schema';
 import { eq, or } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
 
@@ -45,4 +45,36 @@ export const registerUserService = async (data: any) => {
     .limit(1);
 
   return newUser;
+};
+
+export const getCurrentUserService = async (token: string) => {
+  // 1. Get session by token
+  const [activeSession]: any = await db
+    .select()
+    .from(session)
+    .where(eq(session.token, token))
+    .limit(1);
+
+  if (!activeSession) {
+    throw new Error('Unauthorized');
+  }
+
+  // 2. Fetch user data by user_id from session
+  const [user]: any = await db
+    .select({
+      id: users.id,
+      username: users.username,
+      email: users.email,
+      created_at: users.created_at,
+      updated_at: users.updated_at,
+    })
+    .from(users)
+    .where(eq(users.id, activeSession.user_id))
+    .limit(1);
+
+  if (!user) {
+    throw new Error('Unauthorized');
+  }
+
+  return user;
 };

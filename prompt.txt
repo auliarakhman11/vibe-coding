@@ -2,32 +2,29 @@ buatkan issue.md, untuk membuat planing. Nanti dokumen planingnya akan digunakan
 
 isi dari planing nya adalah sebagai berikut:
 
-buatkan table session dengan kolom:
-- id integer autoincrement primary key
-- token varchar(255) not null (isinya UUID untuk token yang login)
-- user_id integer not null (FK ke table users)
-- created_at timestamp default current_timestamp
-- updated_at timestamp default current_timestamp on update current_timestamp
+buatkan api untuk get user saat ini yang sedang login
+endpoint : GET /api/users/current
 
-buatkan api untuk regestrasi user login user
-endpoint : POST /api/login
-request body : {
-    "username": "rakhman",
-    "password": "12345678"
-}
-untuk password harus di hash menggunakan bcrypt
+headers :
+- Authorization : Bearer <token> (token ada token yang ada di table users)
 
 response body (success): 
 {
     "status": 200,
-    "message": "User login successfully",
-    "data": "token"
+    "message": "User current found",
+    "data": {
+        "id": 1,
+        "username": "rakhman",
+        "email": "auliarakhman1107@gmail.com",
+        "created_at": "2022-01-01T00:00:00.000Z",
+        "updated_at": "2022-01-01T00:00:00.000Z"
+    }
 }
 
 response body (error):
 {
     "status": 401,
-    "message": "User not found",
+    "message": "Unauthorized",
     "data": null
 }
 
@@ -38,5 +35,7 @@ Struktur folder didalam src
 Struktur penamaan file
 - route : nama file harus diawali dengan "route-" contoh : route-user.ts
 - service : nama file harus diawali dengan "service-" contoh : service-user.ts
+
+
 
 Jelaskan step tahapan yang harus dilakukan untuk mengimplementasikan fitur ini. anggap nanti yang mengimplementasikan adalah junior developer atau ai model yang lebih murah, jadi jelaskan sedetail mungkin.
