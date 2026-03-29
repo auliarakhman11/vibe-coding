@@ -3,6 +3,15 @@ import { users, session } from '../db/schema';
 import { eq, or } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
 
+/**
+ * Mendaftarkan user baru ke dalam database.
+ * - Mengecek apakah username atau email sudah terdaftar.
+ * - Melakukan hashing password menggunakan bcryptjs sebelum disimpan.
+ * - Mengembalikan data user yang baru dibuat (tanpa password).
+ * @param data - Object berisi name, username, email, dan password.
+ * @returns Data user baru (id, name, username, email, created_at, updated_at).
+ * @throws Error jika username atau email sudah terdaftar.
+ */
 export const registerUserService = async (data: any) => {
   const { name, username, email, password } = data;
 
@@ -47,6 +56,15 @@ export const registerUserService = async (data: any) => {
   return newUser;
 };
 
+/**
+ * Mengambil data user yang sedang login berdasarkan session token.
+ * - Mencari session aktif di tabel session berdasarkan token.
+ * - Mengambil data user berdasarkan user_id dari session tersebut.
+ * - Mengembalikan data profil user tanpa field password.
+ * @param token - UUID token dari header Authorization Bearer.
+ * @returns Data user (id, username, email, created_at, updated_at).
+ * @throws Error 'Unauthorized' jika token tidak ditemukan atau user tidak ada.
+ */
 export const getCurrentUserService = async (token: string) => {
   // 1. Get session by token
   const [activeSession]: any = await db
@@ -79,6 +97,13 @@ export const getCurrentUserService = async (token: string) => {
   return user;
 };
 
+/**
+ * Menghapus session user dari database (logout).
+ * - Menghapus baris di tabel session yang cocok dengan token.
+ * - Bersifat idempotent: tidak melempar error meskipun token sudah tidak ada.
+ * @param token - UUID token dari header Authorization Bearer.
+ * @returns true jika operasi berhasil.
+ */
 export const logoutUserService = async (token: string) => {
   await db.delete(session).where(eq(session.token, token));
   
